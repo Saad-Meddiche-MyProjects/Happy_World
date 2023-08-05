@@ -1,5 +1,5 @@
 nav{
-    background-color: #6351ce ;
+    background-color: var(--main-color) ;
     color: white;
 }
 
@@ -13,4 +13,8 @@ nav{
     color: white !important;
     font-size: 1.5rem !important;
     font-weight: bold !important;
+}
+
+.nav-item{
+    margin:0px 10px;
 }

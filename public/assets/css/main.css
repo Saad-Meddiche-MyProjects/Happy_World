@@ -1,4 +1,10 @@
 @import url('./includes/global.css');
+
 @import url('./includes/navbar.css');
+
+/* This is the syle of Auth Pages */
 @import url('./includes/authentificationForms.css');
+
 @import url('./includes/app.css');
+
+@import url('./includes/home.css');

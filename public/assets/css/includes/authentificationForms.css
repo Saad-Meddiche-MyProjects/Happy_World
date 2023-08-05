@@ -2,21 +2,20 @@
 /* Auth Pages are the pages in the folder resources/views/auth */
 
 .authentification-header{
-    background-color: #6351ce !important;
+    background-color: var(--main-color) !important;
     font-size: 1rem !important;
     font-weight: bolder !important;
     color: white !important;
 }
 
 .authentification-body{
-    border: 2px solid #6351ce !important;
+    border: 2px solid var(--main-color) !important;
 }
 
 .authentification-button{
-    background-color: #6351ce !important;
+    background-color: var(--main-color) !important;
 }
 
 .authentification-forgot-link{
-    color: #6351ce !important;
-
+    color: var(--main-color) !important;
 }

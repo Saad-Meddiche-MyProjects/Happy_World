@@ -1,3 +1,8 @@
 html ,body ,#app{
     height: 100%;
 }
+
+
+:root {
+    --main-color:#6351ce;
+}
