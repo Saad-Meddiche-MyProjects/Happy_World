@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\ServerRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Illuminate\Http\Request;
 
 /**
  * Class ServerCrudController
@@ -14,7 +15,9 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class ServerCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation {
+        store as TraitStore;
+    }
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
@@ -31,45 +34,49 @@ class ServerCrudController extends CrudController
         CRUD::setEntityNameStrings('server', 'servers');
     }
 
-    /**
-     * Define what happens when the List operation is loaded.
-     * 
-     * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
-     * @return void
-     */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // set columns from db columns.
-
-        /**
-         * Columns can be defined using the fluent syntax:
-         * - CRUD::column('price')->type('number');
-         */
+        CRUD::column('name');
+        CRUD::column('user')->label('Creator');
+        CRUD::column('image')
+            ->value(function ($value) {
+                $imageUrl = '/storage/' . $value->image;
+                return $imageUrl;
+            })->type('image');
+        CRUD::column('description')->type('summernote');
+        CRUD::column('ip_adress');
     }
 
-    /**
-     * Define what happens when the Create operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-create
-     * @return void
-     */
+    protected function setupShowOperation()
+    {
+        return $this->setupListOperation();
+    }
+
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(ServerRequest::class);
-        CRUD::setFromDb(); // set fields from db columns.
+        // CRUD::setValidation(ServerRequest::class);
 
-        /**
-         * Fields can be defined using the fluent syntax:
-         * - CRUD::field('price')->type('number');
-         */
+        CRUD::field('name');
+        CRUD::field('user_id')->type('hidden');
+        CRUD::field([
+            'name'      => 'image',
+            'label'     => 'Image',
+            'type'      => 'upload',
+            'withFiles' => true
+        ]);
+        CRUD::field('description')->type('summernote');
+        CRUD::field('ip_adress');
     }
 
-    /**
-     * Define what happens when the Update operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
-     * @return void
-     */
+    protected function store(Request $request)
+    {
+        $loggedAdmin = backpack_user();
+
+        $request->merge(['user_id' => $loggedAdmin->id]);
+
+        return $this->TraitStore();
+    }
+
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
