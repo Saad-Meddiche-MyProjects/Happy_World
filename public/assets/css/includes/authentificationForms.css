@@ -1,3 +1,6 @@
+/* This is the syle of Auth Pages */
+/* Auth Pages are the pages in the folder resources/views/auth */
+
 .authentification-header{
     background-color: #6351ce !important;
     font-size: 1rem !important;
@@ -7,4 +10,13 @@
 
 .authentification-body{
     border: 2px solid #6351ce !important;
+}
+
+.authentification-button{
+    background-color: #6351ce !important;
+}
+
+.authentification-forgot-link{
+    color: #6351ce !important;
+
 }
