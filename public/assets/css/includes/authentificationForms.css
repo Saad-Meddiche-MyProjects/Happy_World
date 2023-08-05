@@ -1,0 +1,10 @@
+.authentification-header{
+    background-color: #6351ce !important;
+    font-size: 1rem !important;
+    font-weight: bolder !important;
+    color: white !important;
+}
+
+.authentification-body{
+    border: 2px solid #6351ce !important;
+}
